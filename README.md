@@ -101,4 +101,4 @@ If the host app initialization fails, check the following:
 * Make sure that the Python version is 3.9.
 * If the Web UI is not properly showing the data, unplug and plug the USB dongle and restart the host app (CTRL + C to stop it).
 
-If the nodes show an erratic behavior, e.g. too many packet errors or distances are missing, check their battery level.
+If the nodes show an erratic behavior, e.g. too many packet errors or distances are missing, check their battery levels.
