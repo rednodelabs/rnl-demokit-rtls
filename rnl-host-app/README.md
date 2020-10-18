@@ -1,23 +1,30 @@
 # rnl-host-app
 
-This is the python-based host application to run the RedNodeLabs Serial Gateway as part of the RTLS DemoKit.
-
-This repository defines the software package that has the functionality of serving as bridge between the wireless network and the backend application.
+This is the Python-based host application to run the RedNodeLabs gateway as part of the RTLS Demo Kit.
 
 ## Install
 
-In order to install this python application, we always recommend to make use of virtual environment and work inside it.
+In order to install this Python application, we recommend using a virtual environment:
 ```
-python3 -m venv venv
+python -m venv venv
+```
+
+Then, to activate it, on Unix or MacOS, run:
+```
 source venv/bin/activate
 ```
 
-If you prefer to install the application in your environment, do it following the next instruction:
+On Windows, run:
 ```
-pip install "git+https://github.com/rednodelabs/rnl-demokit-rtls#egg=rnl-gateway-serial-app&subdirectory=rnl-host-app"
+venv\Scripts\activate.bat
 ```
 
-Otherwise, if you prefer to run it as a python script, just clone this repository in your workspace:
+If you prefer to install the application as a Python module, use the following command:
+```
+pip install "git+https://github.com/rednodelabs/rnl-demokit-rtls/tree/feature/add-gateway-serial-app/rnl-host-app#egg=rnl-gateway-serial-app&subdirectory=rnl-host-app"
+```
+
+Otherwise, to run it as a Python script, just clone this repository in your workspace:
 ```
 git clone https://github.com/rednodelabs/rnl-demokit-rtls.git
 cd rnl-demokit-rtls/rnl-host-app/rnl_gateway_serial_app
@@ -26,14 +33,19 @@ pip install -r requirements.txt
 
 ## Run
 
-Depending on the previous step, you should be able to run the application once installed as following:
+Before running it, be sure that the rnl-web-app is running in another terminal. Also, plug the USB dongle and check the assigned SERIAL_PORT.
+For example, in Windows, run the device manager and check the port assigned to the dongle, e.g. COM4.
+
+If you installed the application as a Python module (replace SERIAL_PORT with the name assgined to the dongle in your system):
 ```
-rnl-gateway-serial-app /dev/tty.usbmodem0000000000001
+rnl-gateway-serial-app SERIAL_PORT
 ```
 
-Or in case you cloned the repository locally and you prefer to run it from there:
+Or in case you want to run it as a Python script:
 ```
-python3 rnl-gateway-serial-app.py /dev/tty.usbmodem0000000000001
+python rnl_gateway_serial_app.py SERIAL_PORT
 ```
 
-In case you want to set up another logging configuration, please indicate your file configuration with the option `--log-config`.
+## Logging
+
+In case you want to set up another logging configuration, indicate your file configuration with the option `--log-config`.
