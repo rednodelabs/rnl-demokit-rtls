@@ -61,6 +61,7 @@ python rnl_run.py SERIAL_PORT
 ```
 
 Open a web browser and access the Demo UI:
+
 http://localhost:3000/
 
 For more detailed installation instructions check the individual README files in the rnl-web-app and rnl-host-app folders.
@@ -89,7 +90,8 @@ For an optimal location of the infrastructure and the tags, the following indica
 * For a 2D fit, at least three anchors should be used, e.g. anchors 3, 4 and 5. The anchors must be placed forming a triangle. Do not place them in the same line. For an optimal result, place them at the same height.
 * For a 3D fit, at least four anchors should be used, e.g. anchors 3, 4, 5 and 6. The first three anchors must be placed forming a triangle and ideally at the same height. The fourth anchor must be place in a different plane (e.g. at a higher height).
 
-Results are better if all the anchors are in range of each other.
+Results are better if all the anchors are in range of each other. The anchors should not be moved after the current execution of the demo has been started. If their positions change, stop and start
+the demo again to recalculate their positions.
 
 
 ## Troubleshooting
@@ -97,6 +99,6 @@ Results are better if all the anchors are in range of each other.
 If the host app initialization fails, check the following:
 * Make sure that the web app is previously running in another terminal and that the specified SERIAL_PORT is correct.
 * Make sure that the Python version is 3.9.
-* If the Web UI is not properly showing the data, unplug and plug the USB dongle and try restarting the host app (CTRL + C to close it),
+* If the Web UI is not properly showing the data, unplug and plug the USB dongle and restart the host app (CTRL + C to stop it).
 
 If the nodes show an erratic behavior, e.g. too many packet errors or distances are missing, check their battery level.
