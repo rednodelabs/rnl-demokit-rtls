@@ -49,15 +49,18 @@ node app.js
 ```
 
 Open a second command line window and install the dependencies of the Python host app:  
+
+> Using a virtual environment is recommended
+
 ```
-cd rnl-host-app
+cd rnl-host-app/rnl_gateway_serial_app
 pip install –r requirements.txt
 ```   
 
 While the web server is running and the USB dongle is plugged, execute the Python app (replacing
 SERIAL_PORT with the name of the port assigned to the dongle in your system): 
 ```
-python rnl_run.py SERIAL_PORT
+python rnl_gateway_serial_app.py SERIAL_PORT
 ```
 
 Open a web browser and access the Demo UI:
