@@ -4,6 +4,8 @@ This is the Python-based host application to run the RedNodeLabs gateway as part
 
 ## Install
 
+> Check that you are using Python@3.8.6 with python -V
+
 In order to install this Python application, we recommend using a virtual environment:
 ```
 python -m venv venv
@@ -21,7 +23,7 @@ venv\Scripts\activate.bat
 
 If you prefer to install the application as a Python module, use the following command:
 ```
-pip install "git+https://github.com/rednodelabs/rnl-demokit-rtls/tree/feature/add-gateway-serial-app/rnl-host-app#egg=rnl-gateway-serial-app&subdirectory=rnl-host-app"
+pip install "git+https://github.com/rednodelabs/rnl-demokit-rtls#egg=rnl-gateway-serial-app&subdirectory=rnl-host-app"
 ```
 
 Otherwise, to run it as a Python script, just clone this repository in your workspace:
