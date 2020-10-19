@@ -28,7 +28,7 @@ setuptools.setup(
         "License :: End-User License Agreement between you and RedNodeLabs UG.",
         "Operating System :: OS Independent",
     ],
-    python_requires='==3.8.6',
+    python_requires='==3.8.5',
     install_requires=[
         'certifi==2020.6.20',
         'chardet==3.0.4',
