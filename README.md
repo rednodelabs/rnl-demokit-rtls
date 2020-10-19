@@ -25,7 +25,7 @@ consumer markets; particularly in the harshest environments and when no complex 
 
 The PC application is compatible with Windows, Linux and macOS. The following software is required:
 
-* Python 3.8.6, with pip
+* Python 3.8.5, with pip
 * Node.js 12.19.0 or later, with npm
 * Git
 

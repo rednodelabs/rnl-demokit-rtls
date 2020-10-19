@@ -4,7 +4,7 @@ This is the Python-based host application to run the RedNodeLabs gateway as part
 
 ## Install
 
-> Check that you are using Python@3.8.6 with python -V
+> Check that you are using Python@3.8.5 with python -V
 
 In order to install this Python application, we recommend using a virtual environment:
 ```
