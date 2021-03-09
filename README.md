@@ -5,8 +5,6 @@
 RedNodeLabs RTLS Demo Kit includes the following:
 
 * 8x Decawave MDEK1001 Development Boards
-* 8x CR123A Rechargeable Batteries
-* 1x Battery Charger
 * 1x Nordic nRF52840 USB Dongle
 
 
@@ -25,7 +23,7 @@ consumer markets; particularly in the harshest environments and when no complex 
 
 The PC application is compatible with Windows, Linux and macOS. The following software is required:
 
-* Python 3.8.5, with pip
+* Python 3.9.2, with pip
 * Node.js 12.19.0 or later, with npm
 * Git
 
@@ -57,10 +55,9 @@ cd rnl-host-app/rnl_gateway_serial_app
 pip install –r requirements.txt
 ```   
 
-While the web server is running and the USB dongle is plugged, execute the Python app (replacing
-SERIAL_PORT with the name of the port assigned to the dongle in your system):
+While the web server is running and the USB dongle is plugged, execute the Python app:
 ```
-python rnl_gateway_serial_app.py SERIAL_PORT
+python rnl_gateway_serial_app.py
 ```
 
 Open a web browser and access the Demo UI:
@@ -100,7 +97,7 @@ the demo again to recalculate their positions.
 ## Troubleshooting
 
 If the host app initialization fails, check the following:
-* Make sure that the web app is previously running in another terminal and that the specified SERIAL_PORT is correct.
+* Make sure that the web app is previously running in another terminal and that the RNL USB dongle is correctly plugged in.
 * Make sure that the Python version is exactly as indicated.
 * If the Web UI is not properly showing the data, unplug and plug the USB dongle and restart the host app (CTRL + C to stop it).
 
