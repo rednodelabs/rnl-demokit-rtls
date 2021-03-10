@@ -4,20 +4,21 @@
 
 RedNodeLabs RTLS Demo Kit includes the following:
 
-* 8x Decawave MDEK1001 Development Boards
+* 7x Decawave MDEK1001 Development Boards
 * 1x Nordic nRF52840 USB Dongle
-
 
 ## Kit Description
 
 Our RTLS Demo Kit provides a system with up to eight nodes showcasing the possibilities of our reliable and low-latency 2.4 GHz wireless mesh network
 working in combination with our accurate Real-Time Localization System (RTLS) application based on UWB.
 
-Six nodes are configured as fixed anchors and two nodes act as mobile tags. The USB dongle is used as a gateway for data collection and visualization in a PC.
+Six nodes are configured as fixed anchors and one node act as mobile tag. The USB dongle is used as a gateway for data collection and visualization in a PC.
 
 All the nodes are power-optimized and able to run with small batteries, making the system a great fit for plug & play applications in sport, industry or
 consumer markets; particularly in the harshest environments and when no complex infrastructure deployment is desired.
 
+
+# Getting Started
 
 ## Prerequisites
 
@@ -27,47 +28,95 @@ The PC application is compatible with Windows, Linux and macOS. The following so
 * Node.js 12.19.0 or later, with npm
 * Git
 
+## rnl-web-app
 
-## Getting Started Guide
+This is the Node.js-based web application to run the RedNodeLabs web server as part of the RTLS Demo Kit.
 
-Use Git to clone the software package:
-```
-git clone https://github.com/rednodelabs/rnl-demokit-rtls.git
-```
+### Install
 
-Open a command line window and install the dependencies of the Node.js web app:
+In order to install this Node.js application, go to the current folder and run:
 ```
 cd rnl-web-app
 npm install
-```  
+```
 
-Run the Node.js web server:
+### Run
+
+To run it, execute the following command:
 ```
 node app.js
 ```
 
-Open a second command line window and install the dependencies of the Python host app:  
+To check whether the web server is working, open a web browser and access the following address:
 
-> Using a virtual environment is recommended
+http://localhost:3000/
 
+### Logging
+
+In case you want to activate the logging, run the application with the following command:
 ```
-cd rnl-host-app/rnl_gateway_serial_app
-pip install –r requirements.txt
-```   
+node app.js --log
+```
 
-While the web server is running and the USB dongle is plugged, execute the Python app:
+A logging file will be created in the current directory.
+
+
+## rnl-host-app
+
+This is the Python-based host application to run the RedNodeLabs gateway as part of the RTLS Demo Kit.
+
+### Install
+
+> Check that you are using Python@3.9.2 with python -V
+
+In order to install this Python application, we recommend using a virtual environment:
+```
+cd rnl_gateway_serial_app
+python -m venv venv
+```
+
+Then, to activate it, on Unix or MacOS, run:
+```
+source venv/bin/activate
+```
+
+On Windows, run:
+```
+venv\Scripts\activate.bat
+```
+
+In order to run it as a Python script, just run it as:
+```
+pip install -r requirements.txt
+```
+
+Otherwise, if you prefer to install the application as a Python module, use the following commands:
+```
+pip install wheel
+pip install "git+https://github.com/rednodelabs/rnl-demokit-rtls#egg=rnl-gateway-serial-app&subdirectory=rnl-host-app"
+```
+
+### Run
+
+Before running it, be sure that the rnl-web-app is running in another terminal the RNL USB dongle is plugged to the computer.
+For example, in Windows, run the device manager and check the port assigned to the dongle, e.g. COM4.
+
+In case you want to run it as a Python script:
 ```
 python rnl_gateway_serial_app.py
 ```
 
-Open a web browser and access the Demo UI:
+If you installed the application as a Python module:
+```
+rnl-gateway-serial-app
+```
 
-http://localhost:3000/
+### Logging
 
-For more detailed installation instructions check the individual README files in the rnl-web-app and rnl-host-app folders.
+In case you want to set up another logging configuration, indicate your file configuration with the option `--log-config`.
 
 
-## User Guide
+# User Guide
 
 The Start button in the top-right corner of the page indicates the status of the demo.
 
