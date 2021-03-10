@@ -1,6 +1,6 @@
 {
   "name": "rnl-web-app",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Web application for RedNodeLabs' RTLS demo kit",
   "main": "app.js",
   "scripts": {
@@ -10,10 +10,6 @@
     "type": "git",
     "url": "git+https://github.com/rednodelabs/rnl-demokit-rtls.git"
   },
-  "keywords": [
-    "RedNodeLabs",
-    "RTLS"
-  ],
   "author": "RedNodeLabs",
   "license": "SEE LICENSE IN LICENSE",
   "bugs": {
@@ -24,7 +20,6 @@
     "express": "^4.17.1",
     "log-to-file": "^2.0.2",
     "socket.io": "^2.3.0",
-    "yargs": "^16.1.0"
-  },
-  "devDependencies": {}
+    "yargs": "^15.3.1"
+  }
 }

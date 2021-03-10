@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>RedNodeLabs</title>
+    <title>RedNodeLabs' RTLS Demo</title>
 	<link rel="shortcut icon" href="img/favicon.png" type="image/png" />
 
 	<!-- Bootstrap Files -->
@@ -35,150 +35,92 @@
   </head>
 
   <body id="page-top">
+
     <!-- Navigation -->
 	<nav class="navbar-default navbar-fixed-top">
 	  <div class="container-fluid">
-		<div class="navbar-header">
-		  <a class="navbar-brand" href="https://www.rednodelabs.com"  style="color:red">RedNodeLabs</a>
-		</div>
 		<ul class="nav navbar-nav">
-		  <li id="li_data" class="active"><a href="#" id="s_data">Data Bus</a></li>
+		  <li id="li_map" class="active"><a href="#" id="s_map">Map</a></li>
+		  <li id="li_data"><a href="#" id="s_data">Bus</a></li>
 		  <li id="li_ranging"><a href="#" id="s_ranging">Ranging</a></li>
-		  <li id="li_map"><a href="#" id="s_map">Map</a></li>
+		  <!--<li id="li_map"><a href="#" id="s_map">Graphs</a></li>-->
 		</ul>
-	     
-		 <ul id="navbar_options" class="nav navbar-nav">
-		 <!--
-		 <li><a id="ch0" style="font-weight:bold; color:green" href="#">Ch0</a></li>
-		 <li><a id="ch1" style="font-weight:bold; color:green" href="#">Ch1</a></li>
-		 <li><a id="ch2" style="font-weight:bold; color:green" href="#">Ch2</a></li>
-		 <li><a id="ch3" style="font-weight:bold; color:green" href="#">Ch3</a></li>
-		 <li><a id="ch4" style="font-weight:bold; color:green" href="#">Ch4</a></li>
-		 <li><a id="ch5" style="font-weight:bold; color:green" href="#">Ch5</a></li>
-		 <li><a id="ch6" style="font-weight:bold; color:green" href="#">Ch6</a></li>
-		 <li><a id="ch7" style="font-weight:bold; color:green" style="pointer-events: none; cursor: default;" href="#">Ch7</a></li>
-		 <!--<li><a href="#" id="pow_minus"><span class="glyphicon glyphicon-minus"></span></a></li>-->
-		 <!--<li><a href="#" id="pow_plus"><span class="glyphicon glyphicon-plus"></span></a></li>-->
-		 <!--<li><a id="pow" style="pointer-events: none; cursor: default;" href="#">0 dBm</a></li>-->
-		 <!--
-         <li><a href="#" id="rep_minus"><span class="glyphicon glyphicon-minus"></span></a></li>
-		 <li><a href="#" id="rep_plus"><span class="glyphicon glyphicon-plus"></span></a></li>
-		 <li><a id="rep" style="pointer-events: none; cursor: default;" href="#">1 Rep.</a></li>
-		 <li><a href="#" id="node_minus"><span class="glyphicon glyphicon-minus"></span></a></li>
-		 <li><a href="#" id="node_plus"><span class="glyphicon glyphicon-plus"></span></a></li>
-		 <li><a id="num_nodes" style="pointer-events: none; cursor: default;" href="#">15 Nodes</a></li>
-         <li><a href="#" id="sleeping_minus"><span class="glyphicon glyphicon-minus"></span></a></li>
-		 <li><a href="#" id="sleeping_plus"><span class="glyphicon glyphicon-plus"></span></a></li>
-		 <li><a id="sleeping_periods" style="pointer-events: none; cursor: default;" href="#">04 Sleep</a></li>
-		 -->
-		 <!--
-         <li><a id="dfu" style="font-weight:bold; color:red" href="#">DFU</a></li>
-         <li><a id="snf" style="font-weight:bold; color:green" href="#">SNF</a></li>
-         <li><a id="sync_off" style="font-weight:bold; color:red" href="#">SYNC_OFF</a></li>
-         <li><a id="sync_cont" style="font-weight:bold; color:green; display:none" href="#">SYNC_CONT</a></li>
-         <li><a id="sync_per" style="font-weight:bold; color:green; display:none" href="#">SYNC_PER</a></li>
-         <li><a id="uwb" style="font-weight:bold; color:red" href="#">UWB</a></li>
-         <li><a id="acc" style="font-weight:bold; color:green; display:none" href="#">ACC</a></li>
-         <li><a id="ext" style="font-weight:bold; color:green; display:none" href="#">EXT</a></li>
-         <li><a id="inc_queue" style="font-weight:bold; color:green; display:none" href="#">INC</a></li>
-		 -->
-         </ul>
-         <ul class="nav navbar-nav navbar-right">
+		<ul class="nav navbar-nav navbar-right">
+	     <!--<li id="li_settings"><a href="#" id="btn_settings"><span class="glyphicon glyphicon-dashboard"></span>  Settings</a></li>-->
 		 <li><a href="#" id="average_minus"><span class="glyphicon glyphicon-minus"></span></a></li>
 		 <li><a href="#" id="average_plus"><span class="glyphicon glyphicon-plus"></span></a></li>
-		 <li><a id="average" style="pointer-events: none; cursor: default;" href="#">16 Average</a></li>
-		 <li><a id="3d" style="font-weight:bold; color:red" href="#">3D</a></li>
-		 <li><a href="#" id="btn_start" style="color:red"><span class="glyphicon glyphicon-play"></span> Start</a></li>
-		 <li><a href="#" id="btn_stop" style="display:none; color:red"><span class="glyphicon glyphicon-stop"></span> Stop</a></li>
-         </ul>
+		 <li><a id="average" style="pointer-events: none; cursor: default;" href="#">032 Filter Strength</a></li>
+		 <li><a href="#" id="btn_start_infra" style="color:grey; pointer-events: none"><span class="glyphicon glyphicon-play"></span>  Anchors</a></li>
+		 <li><a href="#" id="btn_stop_infra" style="color:red; display:none"><span class="glyphicon glyphicon-stop"></span>  Anchors</a></li>
+		 <li><a href="#" id="btn_start_tag" style="color:grey; pointer-events: none"><span class="glyphicon glyphicon-play"></span>  Tag</a></li>
+		 <li><a href="#" id="btn_stop_tag" style="color:red; display:none"><span class="glyphicon glyphicon-stop"></span>  Tag</a></li>
+        </ul>
 	  </div>
-   </nav>
+    </nav>
 
 	<!-- Sensor Data Bus -->
-    <section class="content-section bg-light text-center" id="sec_data">
-      <div class="container">
-            <h2>Data Bus</h2>
+    <section class="content-section bg-light text-center" id="sec_data" style="display:none">
+      <div class="container text-center">
+			<img src="img/logo.png" width="300">
 			<br>
 			<br>
-			<!--
-			<p class="lead mb-5">Global Stats</p>
+			<p class="lead mb-5">Bus Settings</p>
 			<table class="table" id="sensor-general">
 			  <thead>
 			    <tr>
-			      <th scope="col">Nodes</th>
-                  <th scope="col">Channels</th>
+			      <th scope="col">Total Slots</th>
+				  <th scope="col">Commissioning Slots</th>
+				  <th scope="col">Channel Mask ID</th>
                   <th scope="col">Repetitions</th>
 			      <th scope="col">Bus Period (ms)</th>
-                  <th scope="col">Tag Period (ms)</th>
+				  <th scope="col">Role</th>
 			    </tr>
 			  </thead>
 			  <tbody>
-                 <tr>
-                  <td>15</td>
-                  <td>8</td>
-                  <td>1</td>
-			      <td>144</td>
-                  <td>720</td>
-                 </tr>
 			  </tbody>
 			</table>
             <br>
 			<br>
 			<br>
-			-->
-			<!--<p class="lead mb-5">Stats per Node</p>-->
+			<p class="lead mb-5">Stats per Slot</p>
 			<table class="table" id="sensor-nodes">
 			  <thead>
 			    <tr>
-			      <th scope="col">Node ID</th>
-                  <th scope="col">Type</th>
+			      <th scope="col">Slot ID</th>
 			      <th scope="col">Packets Received</th>
-			      <th scope="col">Packet Error Rate (%)</th>
-                  <!--<th scope="col">Wireless Sync Req.</th>
-				  -->
+			      <th scope="col">Error Rate (%)</th>
                   <th scope="col">Hop</th>
                   <th scope="col">RSSI (dBm)</th>
-
-				  <th scope="col">Bitrate (kbps)</th>
+				  <th scope="col">Bitrate (bps)</th>
+				  <th scope="col">Ranging</th>
 			    </tr>
 			  </thead>
 			  <tbody>
 			  </tbody>
 			</table>
-			<!--
-            <br>
 			<br>
 			<br>
-            <p class="lead mb-5">Channel Stats  <a href="#" id="ch_minus" style="display:none"><span class="glyphicon glyphicon-stop" style="color:red"></span></a>
-		    <a href="#" id="ch_plus"><span class="glyphicon glyphicon-play" style="color:green"></span></a></p>
-			<table class="table" id="sensor-channel">
-			<thead>
-			    <tr>
-			      <th scope="col">Node ID</th>
-                  <th scope="col">Channel ID</th>
-			      <th scope="col">Packets Received</th>
-			      <th scope="col">Packet Error Rate (%)</th>
-                  <th scope="col">RSSI (dBm)</th>
-			    </tr>
-			</thead>
-			<tbody>
-			</tbody>
-			</table>
-			-->
+			<br>
+			<p class="lead mb-5">Packets Received per Repetition</p>
+		    <table class="table" id="packets-channel">
+			  <tbody>
+			  </tbody>
+		    </table>
       </div>
     </section>
 	
 	<!-- Positioning Bus -->
     <section class="content-section bg-light text-center" id="sec_ranging" style="display:none">
       <div class="container">
-	    <h2>Ranging</h2>
+	    <img src="img/logo.png" width="300">
 		<br>
 		<br>
 		<p class="lead mb-5">Global Stats</p>
 		<table class="table" id="positioning-general">
 			  <thead>
 			    <tr>
-			      <th scope="col">Number of Nodes</th>
+			      <th scope="col">Number of Anchors</th>
+				  <th scope="col">Number of Tags</th>
                   <th scope="col">Distances Received</th>
                   <th scope="col">Distance Error Rate (%)</th>
 			    </tr>
@@ -189,15 +131,16 @@
         <br>
         <br>
         <br>
-        <p class="lead mb-5">Distance Rate</p>
+        <p class="lead mb-5">Stats per Node</p>
         <table class="table" id="dis_rate">
           <thead>
             <tr>
-              <th scope="col">Node ID</th>
+              <th scope="col">Slot ID</th>
 			  <th scope="col">Type</th>
               <th scope="col">Distances per Cycle</th>
               <th scope="col">Cycle Period (ms)</th>
               <th scope="col">Distances per Second (Hz)</th>
+              <th scope="col">Distance Error Rate (%)</th>
             </tr>
           </thead>
           <tbody>
@@ -206,7 +149,7 @@
 		<br>
 		<br>
 		<br>
-		<p class="lead mb-5">Last Pairwise Distances (cm)</p>
+		<p class="lead mb-5">Pairwise Distances Received, [Last/Average/Std. Dev.](cm)</p>
 		<table class="table" id="last-distance-received">
 			  <tbody>
 			  </tbody>
@@ -214,79 +157,42 @@
 		<br>
 		<br>
 		<br>
-		<p class="lead mb-5">Pairwise Distances, [Average, Standard Deviation] (cm)</p>
-		<table class="table" id="distance-average">
-			  <tbody>
-			  </tbody>
-		</table>
-		<br>
-		<br>
-		<br>
-		<p class="lead mb-5">Pairwise Distances, [Min, Max] (cm)</p>
-		<table class="table" id="distance-min">
-			  <tbody>
-			  </tbody>
-		</table>
-		<br>
-		<br>
-		<br>
-		<p class="lead mb-5">Pairwise Reception, [Hop, RSSI (dBm)]</p>
-		<table class="table" id="hop-rssi">
-			  <tbody>
-			  </tbody>
-		</table>
-		<br>
-		<br>
-		<br>
-		<p class="lead mb-5">Pairwise Distances Received</p>
+		<p class="lead mb-5">Pairwise Distances Received, [Received/Attempts]</p>
 		<table class="table" id="distance-received">
 			  <tbody>
 			  </tbody>
 		</table>
-		<!--
 		<br>
 		<br>
 		<br>
-        <p class="lead mb-5">Acceleration Values</p>
-        <table class="table" id="acc_table">
-          <thead>
-            <tr>
-              <th scope="col">Node ID</th>
-              <th scope="col">X Acc.</th>
-              <th scope="col">Y Acc.</th>
-              <th scope="col">Z Acc.</th>
-              <th scope="col">Samples per Cycle</th>
-              <th scope="col">Cycle Period (ms)</th>
-              <th scope="col">Acc. per Second (Hz)</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-		-->
+		<p class="lead mb-5">Pairwise Reception, [Hop/RSSI (dBm)]</p>
+		<table class="table" id="hop-rssi">
+			  <tbody>
+			  </tbody>
+		</table>
       </div>
     </section>
 	
 	<!-- Map -->
-    <section class="content-section bg-light text-center" id="sec_map" style="display:none">
-      <div class="container">
-			<div id="my_dataviz"></div>
-			<br>
-			<br>
+    <section class="content-section bg-light text-center" id="sec_map">
+	  <div id="my_dataviz"></div>
+      <div class="container text-center">
+			<!--
             <span id="zoom_minus" style="cursor: pointer;"><img src="icons/zoom_minus.svg"></span>
             <img src="icons/separator.svg">
 		    <span id="zoom_plus" style="cursor: pointer;"><img src="icons/zoom_plus.svg"></span>
-            <img src="icons/separator.svg">
-			<!--
-            <span id="rotate_clock" style="cursor: pointer;"><img src="icons/rotate_clockwise.svg"></span>
-            <img src="icons/separator.svg">
-		    <span id="rotate_counterclock" style="cursor: pointer;"><img src="icons/rotate_counterclockwise.svg"></span>
             <img src="icons/separator.svg">
 			-->
             <span id="ref_y" style="cursor: pointer;"><img src="icons/flip_x.svg"></span>
             <img src="icons/separator.svg">
             <span id="ref_x" style="cursor: pointer;"><img src="icons/flip_y.svg"></span>
 			<img src="icons/separator.svg">
+            <span id="rot_ccw" style="cursor: pointer;"><img src="icons/rotate_clockwise.svg"></span>
+			<img src="icons/separator.svg">
+			<!--
+            <span id="rot_ccw" style="cursor: pointer;"><img src="icons/rotate_counterclockwise.svg"></span>
+			<img src="icons/separator.svg">
+			-->
             <span id="lines" style="cursor: pointer;"><img src="icons/lines.svg"></span>
 			<br>
 			<br>
@@ -299,7 +205,7 @@
 			      <th scope="col">Active Anchors</th>
                   <th scope="col">Active Tags</th>
                   <th scope="col">Dimensions</th>
-                  <th scope="col">Anchor Distances (Direct/Indirect/Missing)</th>
+                  <th scope="col">Anchor Links (Direct/Missing/Unconnected)</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -313,18 +219,31 @@
             <table class="table" id="height">
 			  <thead>
 			    <tr>
-			      <th scope="col">Node ID</th>
+			      <th scope="col">Slot ID</th>
                   <th scope="col">Type</th>
-			      <th scope="col">x (cm)</th>
-                  <th scope="col">y (cm)</th>
-                  <th scope="col">z (cm)</th>
+			      <th scope="col">x (m)</th>
+                  <th scope="col">y (m)</th>
+                  <th scope="col">z (m)</th>
                   <th scope="col">Anchors in Range</th>
                   <th scope="col">Update Period (ms)</th>
-                  <th scope="col">Average</th>
-				  <!--
-                  <th scope="col">Error</th>
-                  <th scope="col">Iterations</th>
-				  -->
+                  <th scope="col">Velocity (m/s)</th>
+				  <th scope="col">Filter Order</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			  </tbody>
+			</table>
+			<br>
+			<br>
+			<br>
+			<h2>Pairwise Distances</h2>
+			<br>
+            <table class="table" id="paths">
+			  <thead>
+			    <tr>
+			      <th scope="col">Origin ID</th>
+				  <th scope="col">Destination ID</th>
+                  <th scope="col">Distance (m)</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -341,7 +260,51 @@
 	<script src="js/rnb_data_bus.js"></script>
 	<script src="js/rnb_uwb_bus.js"></script>
 	<script src="js/rnb_map.js"></script>
-	
+
+    <!-- Footer -->
+        <footer class="site-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-6 col-md-2">
+              <img class="img-fluid" src="img/logo_small_sq.png">
+              </div>
+              
+              <div class="col-xs-6 col-md-4">
+              </div>
+
+              <div class="col-xs-6 col-md-3">
+              </div>
+
+              <div class="col-xs-6 col-md-3">
+                <h6>Quick Links</h6>
+                <ul class="footer-links">
+                  <li><a href="https://www.rednodelabs.com/index.html#page-top">Website</a></li>
+                  <li><a href="https://medium.com/@RedNodeLabs" target="_blank">Blog</a></li>
+                  <li><a href="https://www.rednodelabs.com/index.html#about">About Us</a></li>
+                  <li><a href="https://www.rednodelabs.com/index.html#contact">Contact Us</a></li>
+                  <li><a href="https://www.rednodelabs.com/privacy_policy.html">Privacy Policy</a></li>
+                  <li><a href="https://www.rednodelabs.com/privacy_policy.html#imprint">Imprint</a></li>
+                </ul>
+              </div>
+            </div>
+            <hr>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <p class="copyright-text">&copy; 2021 RedNodeLabs UG
+                </p>
+              </div>
+
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <ul class="social-icons">
+                  <li><a class="twitter" href="https://twitter.com/rednodelabs"><i class="fa fa-twitter"></i></a></li>
+                  <li><a class="linkedin" href="https://www.linkedin.com/company/rednodelabs/"><i class="fa fa-linkedin"></i></a></li>   
+                </ul>
+              </div>
+            </div>
+          </div>
+    </footer>
 	
   </body>
 
