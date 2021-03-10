@@ -37,14 +37,8 @@ const client_types = {
     HOST: 'host',
 }
 
-const command_types = {
-    WHO_AM_I: 'who_am_i',
-    START: 'start',
-    STOP: 'stop',
-}
-
 var host_connected = 0;
-var host_started = 0;
+var host_started = 1;
 
 io.on('connection', function(socket){
     var client_type;
@@ -72,13 +66,6 @@ io.on('connection', function(socket){
         {
             case client_types.HOST:
                 host_connected = 1;
-                host_started = 0;
-                socket.broadcast.emit('host_connected');
-                var stop_msg = {
-		            command_type: command_types.STOP
-	            };
-	            socket.emit('commands',stop_msg);
-                console.log(stop_msg);
                 break;
             case client_types.WEB:
                 if(host_connected&&!host_started)
@@ -93,28 +80,18 @@ io.on('connection', function(socket){
         }
     });
 
-    socket.on('commands', function (msg) {
-        socket.broadcast.emit('commands', msg);
-        command_type = msg.command_type;
-        switch(command_type)
-        {
-            case command_types.START:
-                host_started = 1;
-                break;
-            case command_types.STOP:
-                host_started = 0;
-                break;
-        }
-        console.log(time());
-        console.log(msg);
-    });
-
     socket.on('net_stats', function (msg) {
         socket.broadcast.emit('net_stats', msg);
         if(logging)
         {
             log(JSON.stringify(msg), 'default.log');
         }
+    });
+	
+	socket.on('commands', function (msg) {
+        socket.broadcast.emit('commands', msg);
+        console.log(time());
+        console.log(msg);
     });
 
 });
