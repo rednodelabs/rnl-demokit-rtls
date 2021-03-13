@@ -11,10 +11,10 @@ let map_zoom_offset = 0;
 let map_scale_factor = 100;
 
 let rotation_idx = 0
-let rotation_xx = [1, 0, -1, 0]
-let rotation_xy = [0, -1, 0, 1]
-let rotation_yx = [0, 1, 0, -1]
-let rotation_yy = [1, 0, -1, 0]
+let rotation_xx = [1, 0.707, 0, -0.707, -1, -0.707, 0, 0.707]
+let rotation_xy = [0, -0.707, -1, -0.707, 0, 0.707, 1, 0.707]
+let rotation_yx = [0, 0.707, 1, 0.707, 0, -0.707, -1, -0.707]
+let rotation_yy = [1, 0.707, 0, -0.707, -1, -0.707, 0, 0.707]
 
 function init_map()
 {
@@ -232,7 +232,7 @@ function update_map(msg)
 			  .attr("y1", function (d) {return y(msg.positions[msg.indirect_distances_list[i][0]][1]); })
 			  .attr("x2", function (d) {return x(msg.positions[msg.indirect_distances_list[i][1]][0]); })
 			  .attr("y2", function (d) {return y(msg.positions[msg.indirect_distances_list[i][1]][1]); })
-			  .attr("stroke-width", 1)
+			  .attr("stroke-width", 2)
 			  .style("stroke-dasharray", ("3, 3")) 
 			  .attr("stroke", "red");
         }
@@ -384,7 +384,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 	$("#rot_cw").click(function() {
-        if(rotation_idx < 3)
+        if(rotation_idx < 7)
         {
             rotation_idx += 1;
         }
@@ -403,7 +403,7 @@ $(document).ready(function() {
         }
         else
         {
-            rotation_idx = 3;
+            rotation_idx = 7;
         }
 	});	
 });

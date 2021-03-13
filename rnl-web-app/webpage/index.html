@@ -40,8 +40,8 @@
 	<nav class="navbar-default navbar-fixed-top">
 	  <div class="container-fluid">
 		<ul class="nav navbar-nav">
-		  <li id="li_map" class="active"><a href="#" id="s_map">Map</a></li>
-		  <li id="li_data"><a href="#" id="s_data">Bus</a></li>
+		  <li id="li_data" class="active"><a href="#" id="s_data">Bus</a></li>
+		  <li id="li_map"><a href="#" id="s_map">Map</a></li>
 		  <li id="li_ranging"><a href="#" id="s_ranging">Ranging</a></li>
 		  <!--<li id="li_map"><a href="#" id="s_map">Graphs</a></li>-->
 		</ul>
@@ -49,7 +49,7 @@
 	     <!--<li id="li_settings"><a href="#" id="btn_settings"><span class="glyphicon glyphicon-dashboard"></span>  Settings</a></li>-->
 		 <li><a href="#" id="average_minus"><span class="glyphicon glyphicon-minus"></span></a></li>
 		 <li><a href="#" id="average_plus"><span class="glyphicon glyphicon-plus"></span></a></li>
-		 <li><a id="average" style="pointer-events: none; cursor: default;" href="#">032 Filter Strength</a></li>
+		 <li><a id="average" style="pointer-events: none; cursor: default;" href="#">32 Filter Strength</a></li>
 		 <li><a href="#" id="btn_start_infra" style="color:grey; pointer-events: none"><span class="glyphicon glyphicon-play"></span>  Anchors</a></li>
 		 <li><a href="#" id="btn_stop_infra" style="color:red; display:none"><span class="glyphicon glyphicon-stop"></span>  Anchors</a></li>
 		 <li><a href="#" id="btn_start_tag" style="color:grey; pointer-events: none"><span class="glyphicon glyphicon-play"></span>  Tag</a></li>
@@ -59,7 +59,7 @@
     </nav>
 
 	<!-- Sensor Data Bus -->
-    <section class="content-section bg-light text-center" id="sec_data" style="display:none">
+    <section class="content-section bg-light text-center" id="sec_data">
       <div class="container text-center">
 			<img src="img/logo.png" width="300">
 			<br>
@@ -149,7 +149,7 @@
 		<br>
 		<br>
 		<br>
-		<p class="lead mb-5">Pairwise Distances Received, [Last/Average/Std. Dev.](cm)</p>
+		<p class="lead mb-5">Distances Received, [Current/Average/Std. Dev.](cm)</p>
 		<table class="table" id="last-distance-received">
 			  <tbody>
 			  </tbody>
@@ -157,7 +157,7 @@
 		<br>
 		<br>
 		<br>
-		<p class="lead mb-5">Pairwise Distances Received, [Received/Attempts]</p>
+		<p class="lead mb-5">Ranging Requests, [Success/Attempts]</p>
 		<table class="table" id="distance-received">
 			  <tbody>
 			  </tbody>
@@ -165,7 +165,7 @@
 		<br>
 		<br>
 		<br>
-		<p class="lead mb-5">Pairwise Reception, [Hop/RSSI (dBm)]</p>
+		<p class="lead mb-5">Bus Signal Quality, [Hop/RSSI (dBm)]</p>
 		<table class="table" id="hop-rssi">
 			  <tbody>
 			  </tbody>
@@ -174,7 +174,7 @@
     </section>
 	
 	<!-- Map -->
-    <section class="content-section bg-light text-center" id="sec_map">
+    <section class="content-section bg-light text-center" id="sec_map" style="display:none">
 	  <div id="my_dataviz"></div>
       <div class="container text-center">
 			<!--
@@ -189,10 +189,8 @@
 			<img src="icons/separator.svg">
             <span id="rot_ccw" style="cursor: pointer;"><img src="icons/rotate_clockwise.svg"></span>
 			<img src="icons/separator.svg">
-			<!--
-            <span id="rot_ccw" style="cursor: pointer;"><img src="icons/rotate_counterclockwise.svg"></span>
+            <span id="rot_cw" style="cursor: pointer;"><img src="icons/rotate_counterclockwise.svg"></span>
 			<img src="icons/separator.svg">
-			-->
             <span id="lines" style="cursor: pointer;"><img src="icons/lines.svg"></span>
 			<br>
 			<br>
