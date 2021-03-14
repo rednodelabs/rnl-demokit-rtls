@@ -61,7 +61,7 @@ function connection_restarted() {
 
 connect_socket_navbar();
 
-var current_view = "map";
+var current_view = "data";
 
 $(document).ready(function() {
 	$("#s_ranging").click(function() {
@@ -134,6 +134,8 @@ function connect_navbar() {
 								$("#btn_start_infra").hide();
 								$("#btn_stop_tag").hide();
 								$("#btn_stop_infra").show();
+								$("#average_minus").show()
+								$("#average_plus").show()
 							}
 							else
 							{
@@ -141,10 +143,14 @@ function connect_navbar() {
 								$("#btn_start_infra").show().css('color', 'grey').css('pointer-events', 'none');
 								$("#btn_stop_tag").show();
 								$("#btn_stop_infra").hide();
+								$("#average_minus").hide()
+								$("#average_plus").hide()
 							}
 						}
 						else
 						{
+							$("#average_minus").show()
+							$("#average_plus").show()	
 							if(enable_tag_mode)
 							{
 								$("#btn_start_tag").show().css('color', 'green').css('pointer-events', 'auto');
@@ -163,7 +169,9 @@ function connect_navbar() {
 						$("#btn_start_tag").show().css('color', 'grey').css('pointer-events', 'none');
 						$("#btn_start_infra").show().css('color', 'grey').css('pointer-events', 'none');
 						$("#btn_stop_tag").hide();
-						$("#btn_stop_infra").hide();		
+						$("#btn_stop_infra").hide();
+						$("#average_minus").hide()
+						$("#average_plus").hide()						
 					}
 				}
 				if(rec_msg.type == "coordinates")
@@ -230,18 +238,12 @@ let filter_strength = 32;
 
 $(document).ready(function() {
 	$("#average_plus").click(function() {
-		if(filter_strength < 128)
+		if(filter_strength < 64)
 		{
-			filter_strength = filter_strength + 16;
+			filter_strength = filter_strength + 8;
 		}
-        if(filter_strength < 100)
-        {
-            $('#average').html( '0' + filter_strength  + ' Filter Strength' );
-        }
-        else
-        {
-            $('#average').html( filter_strength  + ' Filter Strength' );
-        }
+
+        $('#average').html( filter_strength  + ' Filter Strength' );
 		
 		var msg = {
 			type: command_types.TAG_AVG,
@@ -255,18 +257,12 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 	$("#average_minus").click(function() {
-		if(filter_strength > 32)
+		if(filter_strength > 24)
 		{
-			filter_strength = filter_strength - 16;
+			filter_strength = filter_strength - 8;
 		}
-        if(filter_strength < 100)
-        {
-            $('#average').html( '0' + filter_strength  +' Filter Strength' );
-        }
-        else
-        {
-            $('#average').html( filter_strength  +' Filter Strength' );
-        }
+        
+		$('#average').html( filter_strength  +' Filter Strength' );
 		
 		var msg = {
 			type: command_types.TAG_AVG,

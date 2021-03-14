@@ -47,13 +47,13 @@ io.on('connection', function(socket){
         console.log(time());
         switch(client_type)
         {
-            case client_types.HOST:
-                socket.broadcast.emit('host_disconnected');
-                console.log('host_disconnected');
-                host_connected = 0;
-                break;
             case client_types.WEB:
-                console.log('web_disconnected');
+                console.log('web disconnected');
+                break;
+			default:
+                socket.broadcast.emit('host_disconnected');
+                console.log('host disconnected');
+                host_connected = 0;
                 break;
         }
     });
@@ -66,8 +66,10 @@ io.on('connection', function(socket){
         {
             case client_types.HOST:
                 host_connected = 1;
+				console.log('host connected');
                 break;
             case client_types.WEB:
+				console.log('web connected');
                 if(host_connected&&!host_started)
                 {
                     socket.emit('host_connected');

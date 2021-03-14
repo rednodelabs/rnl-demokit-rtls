@@ -125,7 +125,7 @@ function rnb_data_update(msg)
 		
 		if(msg.hop[i] == 255 && msg.sf_in[i] != -1)
 		{
-			document.getElementById('sensor-nodes').rows[i+1-initial_index].style.backgroundColor = "#FFD1D6";
+			document.getElementById('sensor-nodes').rows[i+1-initial_index].style.backgroundColor = "#FFE6E8";
 		}
 		else if(msg.sf_in[i] == -1)
 		{
