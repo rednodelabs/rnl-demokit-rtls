@@ -10,11 +10,8 @@ let plot_max_y = 20;
 let map_zoom_offset = 0;
 let map_scale_factor = 100;
 
-let rotation_idx = 0
-let rotation_xx = [1, 0.707, 0, -0.707, -1, -0.707, 0, 0.707]
-let rotation_xy = [0, -0.707, -1, -0.707, 0, 0.707, 1, 0.707]
-let rotation_yx = [0, 0.707, 1, 0.707, 0, -0.707, -1, -0.707]
-let rotation_yy = [1, 0.707, 0, -0.707, -1, -0.707, 0, 0.707]
+let rotation_angle = 0
+let rotation_angle_increment = 10
 
 function init_map()
 {
@@ -73,21 +70,21 @@ function update_map(msg)
 	let csv_positions = "x,y,id";
     let csv_positions_tag = "x,y,id";
 	let csv_path_tag  = "x,y"
-	
+
 	let min_x = 999999;
 	let max_x = -999999;
 	let min_y = 999999;
 	let max_y = -999999;
-    
+
     for(let i=0; i<msg.active_node_count_tag; i++)
 	{
 		let aux_x = msg.tag_position[msg.active_node_index_tag[i]][0];
-		msg.tag_position[msg.active_node_index_tag[i]][0] = rotation_xx[rotation_idx]*msg.tag_position[msg.active_node_index_tag[i]][0] + rotation_xy[rotation_idx]*msg.tag_position[msg.active_node_index_tag[i]][1]
-		msg.tag_position[msg.active_node_index_tag[i]][1] = rotation_yx[rotation_idx]*aux_x + rotation_yy[rotation_idx]*msg.tag_position[msg.active_node_index_tag[i]][1]
-		
+		msg.tag_position[msg.active_node_index_tag[i]][0] = Math.cos(rotation_angle)*msg.tag_position[msg.active_node_index_tag[i]][0] - Math.sin(rotation_angle)*msg.tag_position[msg.active_node_index_tag[i]][1]
+		msg.tag_position[msg.active_node_index_tag[i]][1] = Math.sin(rotation_angle)*aux_x + Math.cos(rotation_angle)*msg.tag_position[msg.active_node_index_tag[i]][1]
+
 		msg.tag_position[msg.active_node_index_tag[i]][0] = ref_x*msg.tag_position[msg.active_node_index_tag[i]][0]/map_scale_factor
 		msg.tag_position[msg.active_node_index_tag[i]][1] = ref_y*msg.tag_position[msg.active_node_index_tag[i]][1]/map_scale_factor
-		
+
 		if(msg.tag_position[msg.active_node_index_tag[i]][0] > max_x)
 		{
 			max_x = msg.tag_position[msg.active_node_index_tag[i]][0]
@@ -96,7 +93,7 @@ function update_map(msg)
 		{
 			min_x = msg.tag_position[msg.active_node_index_tag[i]][0];
 		}
-		
+
 		if(msg.tag_position[msg.active_node_index_tag[i]][1] > max_y)
 		{
 			max_y = msg.tag_position[msg.active_node_index_tag[i]][1]
@@ -105,18 +102,18 @@ function update_map(msg)
 		{
 			min_y = msg.tag_position[msg.active_node_index_tag[i]][1];
 		}
-		
+
 		csv_positions_tag = csv_positions_tag + "\n" + (msg.tag_position[msg.active_node_index_tag[i]][0]).toString() + "," + (msg.tag_position[msg.active_node_index_tag[i]][1]).toString()
 		 + "," + msg.active_node_index_tag[i].toString();
-		 
+
 		for(let j=0; j<msg.last_positions_tag.length; j++)
 		{
 			let aux_x = msg.last_positions_tag[j][0];
-			msg.last_positions_tag[j][0] = rotation_xx[rotation_idx]*msg.last_positions_tag[j][0] + rotation_xy[rotation_idx]*msg.last_positions_tag[j][1]
-			msg.last_positions_tag[j][1] = rotation_yx[rotation_idx]*aux_x + rotation_yy[rotation_idx]*msg.last_positions_tag[j][1]
+			msg.last_positions_tag[j][0] = Math.cos(rotation_angle)*msg.last_positions_tag[j][0] - Math.sin(rotation_angle)*msg.last_positions_tag[j][1]
+			msg.last_positions_tag[j][1] = Math.sin(rotation_angle)*aux_x + Math.cos(rotation_angle)*msg.last_positions_tag[j][1]
 			csv_path_tag = csv_path_tag + "\n" + (ref_x*msg.last_positions_tag[j][0]/map_scale_factor).toString() + "," + (ref_y*msg.last_positions_tag[j][1]/map_scale_factor).toString();
 		}
-		
+
 		if(msg.dimensions == 2)
 		{
 			updateTable('height', i+1, [msg.active_node_index_tag[i], "Tag", msg.tag_position[msg.active_node_index_tag[i]][0].toFixed(2), (msg.tag_position[msg.active_node_index_tag[i]][1]).toFixed(2), "-", msg.anchors_in_tag_range[i], (msg.pps_tag).toFixed(0), (10*msg.tag_velocity/busPeriod).toFixed(1), msg.tag_filter_order]);
@@ -125,22 +122,22 @@ function update_map(msg)
 		{
 			updateTable('height', i+1, [msg.active_node_index_tag[i], "Tag", msg.tag_position[msg.active_node_index_tag[i]][0].toFixed(2), (msg.tag_position[msg.active_node_index_tag[i]][1]).toFixed(2), (msg.tag_position[msg.active_node_index_tag[i]][2]/map_scale_factor).toFixed(2), msg.anchors_in_tag_range[i], (msg.pps_tag).toFixed(0), (10*msg.tag_velocity/busPeriod).toFixed(1), msg.tag_filter_order]);
 		}
-		
+
 		if(msg.tag_started == 0)
 		{
 			document.getElementById('height').rows[i+1].style.backgroundColor = "#D3D3D3";
 		}
 	}
-    
+
 	for(let i=0; i<msg.active_node_count; i++)
 	{
 		let aux_x = msg.positions[i][0];
-		msg.positions[i][0] = rotation_xx[rotation_idx]*msg.positions[i][0] + rotation_xy[rotation_idx]*msg.positions[i][1]
-		msg.positions[i][1] = rotation_yx[rotation_idx]*aux_x + rotation_yy[rotation_idx]*msg.positions[i][1]
-	
+		msg.positions[i][0] = Math.cos(rotation_angle)*msg.positions[i][0] - Math.sin(rotation_angle)*msg.positions[i][1]
+		msg.positions[i][1] = Math.sin(rotation_angle)*aux_x + Math.cos(rotation_angle)*msg.positions[i][1]
+
 		msg.positions[i][0] = ref_x*msg.positions[i][0]/map_scale_factor
 		msg.positions[i][1] = ref_y*msg.positions[i][1]/map_scale_factor
-		
+
 		if(msg.positions[i][0] > max_x)
 		{
 			max_x = msg.positions[i][0]
@@ -149,7 +146,7 @@ function update_map(msg)
 		{
 			min_x = msg.positions[i][0];
 		}
-		
+
 		if(msg.positions[i][1] > max_y)
 		{
 			max_y = msg.positions[i][1]
@@ -158,7 +155,7 @@ function update_map(msg)
 		{
 			min_y = msg.positions[i][1];
 		}
-		
+
 		csv_positions = csv_positions + "\n" + (msg.positions[i][0]).toString() + "," + (msg.positions[i][1]).toString()
 		 + "," + msg.active_node_index[i].toString();
 		if(msg.dimensions == 2)
@@ -169,14 +166,14 @@ function update_map(msg)
 		{
 			updateTable('height', i+1+msg.active_node_count_tag, [msg.active_node_index[i], "Anchor", msg.positions[i][0].toFixed(2), msg.positions[i][1].toFixed(2), (msg.positions[i][2]/map_scale_factor).toFixed(2), msg.anchors_in_range[msg.active_node_index[i]], (msg.pps).toFixed(0),"-","-"]);
 		}
-		
+
 		if(msg.infra_started == 0)
 		{
 			document.getElementById('height').rows[i+1+msg.active_node_count_tag].style.backgroundColor = "#D3D3D3";
 		}
-		
+
 	}
-	
+
 	if((max_x-min_x)> 2*(max_y-min_y))
 	{
 		new_plot_min_x = (min_x - map_zoom_offset);
@@ -191,26 +188,26 @@ function update_map(msg)
 		new_plot_min_x = (min_x + (max_x - min_x)/ 2) - (new_plot_max_y - new_plot_min_y)
 		new_plot_max_x = (min_x + (max_x - min_x)/ 2) + (new_plot_max_y - new_plot_min_y)
 	}
-	
-	if( Math.abs(new_plot_min_x - plot_min_x) > 0.1 ||	
-	Math.abs(new_plot_max_x - plot_max_x) > 0.1 ||	
-	Math.abs(new_plot_min_y - plot_min_y) > 0.1 || 
+
+	if( Math.abs(new_plot_min_x - plot_min_x) > 0.1 ||
+	Math.abs(new_plot_max_x - plot_max_x) > 0.1 ||
+	Math.abs(new_plot_min_y - plot_min_y) > 0.1 ||
 	Math.abs(new_plot_max_y - plot_max_y) > 0.1)
 	{
 		plot_min_x = new_plot_min_x;
 		plot_max_x = new_plot_max_x;
 		plot_min_y = new_plot_min_y;
 		plot_max_y = new_plot_max_y;
-		
+
 		$("#my_dataviz").empty();
         svg.selectAll("*").remove();
         init_map();
 	}
-		
+
 	updateTable('map', 1, [msg.active_node_count, msg.active_node_count_tag, msg.dimensions, msg.direct_distances+"/"+msg.indirect_distances+"/"+msg.missing_distances]);
-	
+
     svg.selectAll("line").remove()
-    
+
     if(view_lines)
     {
         for(let i=0; i<msg.direct_distances; i++)
@@ -221,10 +218,10 @@ function update_map(msg)
 			  .attr("x2", function (d) {return x(msg.positions[msg.direct_distances_list[i][1]][0]); })
 			  .attr("y2", function (d) {return y(msg.positions[msg.direct_distances_list[i][1]][1]); })
 			  .attr("stroke-width", 1)
-			  .style("stroke-dasharray", ("3, 3")) 
+			  .style("stroke-dasharray", ("3, 3"))
 			  .attr("stroke", "black");
         }
-		
+
 		for(let i=0; i<msg.indirect_distances; i++)
         {
 			svg.append("line")
@@ -233,44 +230,43 @@ function update_map(msg)
 			  .attr("x2", function (d) {return x(msg.positions[msg.indirect_distances_list[i][1]][0]); })
 			  .attr("y2", function (d) {return y(msg.positions[msg.indirect_distances_list[i][1]][1]); })
 			  .attr("stroke-width", 2)
-			  .style("stroke-dasharray", ("3, 3")) 
+			  .style("stroke-dasharray", ("3, 3"))
 			  .attr("stroke", "red");
         }
     }
-        
+
     var d3_positions = d3.csvParse(csv_positions, d=>
 		{d.x=+d.x;
 		d.y=+d.y;
 		d.id=d.id;
 		return d;});
-    
+
     var d3_positions_tag = d3.csvParse(csv_positions_tag, d=>
 		{d.x=+d.x;
 		d.y=+d.y;
 		d.id=d.id;
 		return d;});
-	
+
     var d3_positions_tag_path = d3.csvParse(csv_path_tag, d=>
 		{d.x=+d.x;
 		d.y=+d.y;
 		return d;});
-		
+
 		svg.selectAll("path.tag").remove()
-		
+
 		svg.append("path")
 			   .datum(d3_positions_tag_path)
 			   .attr("fill", "none")
 			   .attr("stroke", "#F9152F")
 			   .attr("stroke-width", 1)
-	
+
 			   .attr("class","tag")
 		       .attr("d", d3.line()
 					.x(function(d) { return x(d.x) })
 					.y(function(d) { return y(d.y) })
 					.curve(d3.curveBasis)
 				)
-				 
-				
+
 	  svg.selectAll("circle").remove()
 	  svg.selectAll("#circle_label").remove()
 
@@ -281,9 +277,9 @@ function update_map(msg)
 		.append("circle")
 		  .attr("cx", function (d) { return x(d.x); } )
 		  .attr("cy", function (d) { return y(d.y); } )
-		  .attr("r", 12)
+		  .attr("r", 9)
 		  .style("fill", "#000000")
-          
+
       svg.append('g')
 		.selectAll("dot")
 		.data(d3_positions_tag)
@@ -291,7 +287,7 @@ function update_map(msg)
 		.append("circle")
 		  .attr("cx", function (d) { return x(d.x); } )
 		  .attr("cy", function (d) { return y(d.y); } )
-		  .attr("r", 12)
+		  .attr("r", 9)
 		  .style("fill", "#F9152F")
 
 	  svg.append('g')
@@ -299,32 +295,29 @@ function update_map(msg)
 	   .data(d3_positions)
 	   .enter()
 	   .append("text")
-	   // Add your code below this line
-		 .attr("x", function (d) { return x(d.x)-5; } )
-		 .attr("y", function (d) { return y(d.y)+5; } )
+		 .attr("x", function (d) { return x(d.x)-4; } )
+		 .attr("y", function (d) { return y(d.y)+4; } )
 	   .attr('id','circle_label')
 	   .style("fill", "#FFFFFFFF")
 	   .text(function (d) { return d.id; })
-      
-	  
+
       svg.append('g')
 	   .selectAll("text")
 	   .data(d3_positions_tag)
 	   .enter()
 	   .append("text")
-	   // Add your code below this line
-		 .attr("x", function (d) { return x(d.x)-5; } )
-		 .attr("y", function (d) { return y(d.y)+5; } )
+		 .attr("x", function (d) { return x(d.x)-4; } )
+		 .attr("y", function (d) { return y(d.y)+4; } )
 	   .attr('id','circle_label')
 	   .style("fill", "#FFFFFFFF")
 	   .text(function (d) { return d.id; })
-	   
+
 	   let rows = 1;
 	   for(let i=0; i<(msg.active_node_count - 1); i++)
 	   {
 		   for(let j=i+1; j<msg.active_node_count; j++)
 		   {
-				updateTable('paths', rows, [msg.active_node_index[i],msg.active_node_index[j], 
+				updateTable('paths', rows, [msg.active_node_index[i],msg.active_node_index[j],
 				((Math.sqrt(Math.pow(msg.positions[i][0]-msg.positions[j][0],2)+Math.pow(msg.positions[i][1]-msg.positions[j][1],2)))).toFixed(2)]);
 				rows++;
 		   }
@@ -384,28 +377,14 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 	$("#rot_cw").click(function() {
-        if(rotation_idx < 7)
-        {
-            rotation_idx += 1;
-        }
-        else
-        {
-            rotation_idx = 0;
-        }
-	});	
+		rotation_angle += rotation_angle_increment*Math.PI/180;
+	});
 });
 
 $(document).ready(function() {
 	$("#rot_ccw").click(function() {
-        if(rotation_idx > 0)
-        {
-            rotation_idx -= 1;
-        }
-        else
-        {
-            rotation_idx = 7;
-        }
-	});	
+		rotation_angle -= rotation_angle_increment*Math.PI/180;
+	});
 });
 
 init_map();
