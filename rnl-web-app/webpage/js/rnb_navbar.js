@@ -216,10 +216,20 @@ $(document).ready(function() {
 	});
 	
 	$("#btn_start_tag").click(function() {
+			
+			var msg = {
+				type: command_types.TAG_AVG,
+				avg: filter_strength
+			};
+			
+			socket.emit('commands', msg);
+
 			var msg = {
 				type: command_types.START_TAG
 			};
+
 			socket.emit('commands', msg);
+			
 			//rnb_started = 0;
 			return false;
 	});
@@ -238,18 +248,12 @@ let filter_strength = 32;
 
 $(document).ready(function() {
 	$("#average_plus").click(function() {
-		if(filter_strength < 64)
+		if(filter_strength < 96)
 		{
 			filter_strength = filter_strength + 8;
 		}
 
         $('#average').html( filter_strength  + ' Filter Strength' );
-		
-		var msg = {
-			type: command_types.TAG_AVG,
-			avg: filter_strength
-		};
-		socket.emit('commands', msg);
 		
 		return false;
     });
@@ -263,13 +267,7 @@ $(document).ready(function() {
 		}
         
 		$('#average').html( filter_strength  +' Filter Strength' );
-		
-		var msg = {
-			type: command_types.TAG_AVG,
-			avg: filter_strength
-		};
-		socket.emit('commands', msg);
-		
+
 		return false;
 	});
 });

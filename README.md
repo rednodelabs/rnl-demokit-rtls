@@ -1,3 +1,5 @@
+![logo](./rnl-web-app/webpage/img/logo.png)
+
 # RedNodeLabs RTLS Demo Kit  
 
 ## Kit Content
@@ -53,12 +55,32 @@ http://localhost:3000/
 
 ### Logging
 
-In case you want to activate the logging, run the application with the following command:
+In case you want to activate the logging, follow the next steps.
+A logging file will be then created in the current directory every time
+you start the application.
+
+For simplified logging mode, please use:
 ```
-node app.js --log
+node app.js -s
 ```
 
-A logging file will be created in the current directory.
+You will find two different JSON message formats.
+The ranging type, containing the raw distances between nodes, e.g.:
+```
+{"type":"ranging","distances":[[1,2,100],[3,2,70]]}
+```
+where each element of the array refers the initiator node id in the first position,
+the responder node in the second position, and finally the measured distance between them.
+
+The coordinates type, containing the processed coordinates, e.g.:
+```
+{"type":"coordinates","active_anchors":3,"active_tags":0,"filter_strength":32,"active_anchors_coordinates":[[1,[0,0]],[2,[13.33396331373197,-6.00512497129295e-15]],[3,[-13.32942735622308,0.3477700492019254]]]}
+```
+
+For extended logging mode, please use:
+```
+node app.js -l
+```
 
 
 ## rnl-host-app
