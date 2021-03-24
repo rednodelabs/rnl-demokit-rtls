@@ -10,7 +10,7 @@ pyserial==3.5
 python-engineio==3.14.2
 python-socketio==5.0.0
 requests==2.25.1
-scikit-learn @ git+git://github.com/rednodelabs/scikit-learn@ddbc560603a6633b97fefeb2f2adfcfdf6bb0417
+rnl-scikit-learn==1.0.dev0
 scipy==1.6.1
 six==1.15.0
 threadpoolctl==2.1.0
