@@ -152,7 +152,7 @@ io.on('connection', function(socket){
 						
 						for(let i = 0; i<msg.active_node_count_tag; i++)
 						{
-							msg_simple.active_tags_coordinates[i] = [msg.active_node_index_tag, msg.tag_position[0]];
+							msg_simple.active_tags_coordinates[i] = [msg.active_node_index_tag, msg.tag_position[msg.active_node_index_tag[i]]];
 						}
 					}
 					
