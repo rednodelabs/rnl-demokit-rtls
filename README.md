@@ -9,9 +9,12 @@ RedNodeLabs RTLS Demo Kit includes the following:
 * 7x Decawave MDEK1001 Development Boards
 * 1x Nordic nRF52840 USB Dongle
 
+> The number of boards may be different depending on the particular configuration (number of anchors and tags) of your kit
+
+
 ## Kit Description
 
-Our RTLS Demo Kit provides a system with up to seven nodes showcasing the possibilities of our reliable and low-latency 2.4 GHz wireless mesh network
+Our RTLS Demo Kit provides a system showcasing the possibilities of our reliable and low-latency 2.4 GHz wireless mesh network
 working in combination with our accurate Real-Time Localization System (RTLS) application based on UWB.
 
 Six nodes are configured as fixed anchors and one node acts as mobile tag. The USB dongle is used as a gateway for data collection and visualization in a PC.
@@ -29,6 +32,7 @@ The PC application is compatible with Windows, Linux and macOS. The following so
 * Python 3.9.2, with pip
 * Node.js 12.19.0 or later, with npm
 * Git
+
 
 ## rnl-web-app
 
@@ -120,8 +124,7 @@ pip install "git+https://github.com/rednodelabs/rnl-demokit-rtls#egg=rnl-gateway
 
 ### Run
 
-Before running it, be sure that the rnl-web-app is running in another terminal the RNL USB dongle is plugged to the computer.
-For example, in Windows, run the device manager and check the port assigned to the dongle, e.g. COM4.
+Before running it, be sure that the rnl-web-app is running in another terminal the RNL USB dongle is plugged.
 
 In case you want to run it as a Python script:
 ```
@@ -140,26 +143,14 @@ In case you want to set up another logging configuration, indicate your file con
 
 # User Guide
 
-The Start button in the top-right corner of the page indicates the status of the demo.
-
-* If the web app is running, but the host app is stopped, the Start button is red.
-* If both the web app and the host app are running, the Start button is green.
-
-Before clicking on the button to start the demo, the amount of averaging for calculating the tag position can be adjusted (from 2 to 16 samples) and a 2D or 3D fit can be selected.
-
 The UI has three tabs:
 
-* In the Data Bus tab, statistics about the operation of the mesh bus are displayed.
-* In the Ranging tab, statistics about the operation of the UWB ranging are displayed.
-* In the Map tab, a 2D representation of the anchors and tag is shown. Map can be freely mirrored in both axis to better resemble the actual position of the nodes. Real-time coordinates are shown in the table below.
+* In the Bus tab, statistics about the operation of the mesh bus are displayed.
+* In the Ranging tab, statistics about the operation of the ranging bus are displayed.
+* In the Map tab, a 2D representation of the anchors and tags is shown. Map can be freely mirrored in both axis and rotated to better resemble the actual position of the nodes. Real-time coordinates are shown in the table below.
 
 
 ## Anchor placement
-
-For an optimal location of the infrastructure and the tags, the following indications should be followed:
-
-* For a 2D fit, at least three anchors should be used, e.g. anchors 3, 4 and 5. The anchors must be placed forming a triangle. Do not place them in the same line. For an optimal result, place them at the same height.
-* For a 3D fit, at least four anchors should be used, e.g. anchors 3, 4, 5 and 6. The first three anchors must be placed forming a triangle and ideally at the same height. The fourth anchor must be place in a different plane (e.g. at a higher height).
 
 Results are better if all the anchors are in range of each other. The anchors should not be moved after the current execution of the demo has been started. If their positions change, stop and start
 the demo again to recalculate their positions.
