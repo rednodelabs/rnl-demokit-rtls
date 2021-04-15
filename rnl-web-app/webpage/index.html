@@ -47,13 +47,19 @@
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 	     <!--<li id="li_settings"><a href="#" id="btn_settings"><span class="glyphicon glyphicon-dashboard"></span>  Settings</a></li>-->
+		 <li><a id="dimensions" href="#" style="color:green"><b>2D</b></a></li>
+		 <li><a href="#" id="average_d_minus"><span class="glyphicon glyphicon-minus"></span></a></li>
+		 <li><a href="#" id="average_d_plus"><span class="glyphicon glyphicon-plus"></span></a></li>
+		 <li><a id="average_d" style="pointer-events: none; cursor: default;" href="#">4 Distance Filter Order</a></li>
 		 <li><a href="#" id="average_minus"><span class="glyphicon glyphicon-minus"></span></a></li>
 		 <li><a href="#" id="average_plus"><span class="glyphicon glyphicon-plus"></span></a></li>
-		 <li><a id="average" style="pointer-events: none; cursor: default;" href="#">32 Filter Strength</a></li>
+		 <li><a id="average" style="pointer-events: none; cursor: default;" href="#">32 Position Filter Order</a></li>
 		 <li><a href="#" id="btn_start_infra" style="color:grey; pointer-events: none"><span class="glyphicon glyphicon-play"></span>  Anchors</a></li>
 		 <li><a href="#" id="btn_stop_infra" style="color:red; display:none"><span class="glyphicon glyphicon-stop"></span>  Anchors</a></li>
-		 <li><a href="#" id="btn_start_tag" style="color:grey; pointer-events: none"><span class="glyphicon glyphicon-play"></span>  Tag</a></li>
-		 <li><a href="#" id="btn_stop_tag" style="color:red; display:none"><span class="glyphicon glyphicon-stop"></span>  Tag</a></li>
+		 <li><a href="#" id="btn_start_tag2w" style="color:grey; pointer-events: none"><span class="glyphicon glyphicon-play"></span>  Tags TWR</a></li>
+		 <li><a href="#" id="btn_stop_tag2w" style="color:red; display:none"><span class="glyphicon glyphicon-stop"></span>  Tags TWR</a></li>
+		 <li><a href="#" id="btn_start_tag" style="color:grey; pointer-events: none"><span class="glyphicon glyphicon-play"></span>  Tags DS-TWR</a></li>
+		 <li><a href="#" id="btn_stop_tag" style="color:red; display:none"><span class="glyphicon glyphicon-stop"></span>  Tags DS-TWR</a></li>
         </ul>
 	  </div>
     </nav>
@@ -162,11 +168,13 @@
 			  <tbody>
 			  </tbody>
 		</table>
+		<!--
 		<br>
 		<br>
 		<br>
 		<p class="lead mb-5">Bus Signal Quality, [Hop/RSSI (dBm)]</p>
-		<table class="table" id="hop-rssi">
+		-->
+		<table class="table" id="hop-rssi" style="display:none">
 			  <tbody>
 			  </tbody>
 		</table>
@@ -225,7 +233,8 @@
                   <th scope="col">Anchors in Range</th>
                   <th scope="col">Update Period (ms)</th>
                   <th scope="col">Velocity (m/s)</th>
-				  <th scope="col">Filter Order</th>
+				  <th scope="col">Dis Filter</th>
+				  <th scope="col">Pos Filter</th>
 			    </tr>
 			  </thead>
 			  <tbody>

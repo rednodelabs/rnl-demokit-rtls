@@ -1,5 +1,5 @@
 const max_nodes = 32;
-const average_length = 8;
+const average_length = 16;
 const REDNODERANGING_DISTANCE_ERROR = -32768;
 
 let last_total_distances_received_array = new Array(max_nodes).fill(0);
@@ -158,11 +158,7 @@ function uwb_data_update_ranging(msg)
 						avg_index[i][j-1] = (avg_index[i][j-1]+1)%average_length;
 						current_distance = msg.rnr[k][2];
 					}
-					
-					if(avg_index[i][j-1] == (average_length-1))
-					{
-						completed_average[i][j-1] = 1;
-					}
+				
 					
 					if(completed_average[i][j-1])
 					{
@@ -171,6 +167,11 @@ function uwb_data_update_ranging(msg)
 					else
 					{
 						distances_rec_last_avg[i][j-1] = current_distance +'/-/-';
+					}
+
+					if(avg_index[i][j-1] == (average_length-1))
+					{
+						completed_average[i][j-1] = 1;
 					}
 				}
 			}

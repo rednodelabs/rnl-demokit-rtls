@@ -1,3 +1,9 @@
+const REDNODEBUS_ROLE_MASTER = 0;
+const REDNODEBUS_ROLE_SNIFFER = 1;
+const REDNODEBUS_ROLE_ANCHOR = 2;
+const REDNODEBUS_ROLE_TAG = 3;
+const REDNODEBUS_ROLE_TAG_LOW_POWER = 4;
+
 const REDNODERANGING_ROLE_ANCHOR = 1;
 const REDNODERANGING_ROLE_TAG = 2;
 const REDNODERANGING_ROLE_LOW_POWER_TAG = 3;
@@ -74,12 +80,12 @@ function rnb_data_update(msg)
 	
 	let role="";
 	let initial_index;
-	if(msg.role == 2)
+	if(msg.role == REDNODEBUS_ROLE_MASTER)
 	{
 		role = "Master";
 		initial_index = 1;
 	}
-	else if(msg.role == 3)
+	else if(msg.role == REDNODEBUS_ROLE_SNIFFER)
 	{
 		role = "Sniffer";
 		initial_index = 0;

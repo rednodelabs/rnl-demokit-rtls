@@ -69,12 +69,14 @@ function update_map(msg)
 	//Transform position to csv
 	let csv_positions = "x,y,id";
     let csv_positions_tag = "x,y,id";
-	let csv_path_tag  = "x,y"
+	let csv_path_tag;
 
 	let min_x = 999999;
 	let max_x = -999999;
 	let min_y = 999999;
 	let max_y = -999999;
+
+	svg.selectAll("path.tag").remove()
 
     for(let i=0; i<msg.active_node_count_tag; i++)
 	{
@@ -106,24 +108,44 @@ function update_map(msg)
 		csv_positions_tag = csv_positions_tag + "\n" + (msg.tag_position[msg.active_node_index_tag[i]][0]).toString() + "," + (msg.tag_position[msg.active_node_index_tag[i]][1]).toString()
 		 + "," + msg.active_node_index_tag[i].toString();
 
-		for(let j=0; j<msg.last_positions_tag.length; j++)
+		csv_path_tag  = "x,y"
+		
+		for(let j=0; j<msg.last_positions_tag[msg.active_node_index_tag[i]].length; j++)
 		{
-			let aux_x = msg.last_positions_tag[j][0];
-			msg.last_positions_tag[j][0] = Math.cos(rotation_angle)*msg.last_positions_tag[j][0] - Math.sin(rotation_angle)*msg.last_positions_tag[j][1]
-			msg.last_positions_tag[j][1] = Math.sin(rotation_angle)*aux_x + Math.cos(rotation_angle)*msg.last_positions_tag[j][1]
-			csv_path_tag = csv_path_tag + "\n" + (ref_x*msg.last_positions_tag[j][0]/map_scale_factor).toString() + "," + (ref_y*msg.last_positions_tag[j][1]/map_scale_factor).toString();
+			let aux_x = msg.last_positions_tag[msg.active_node_index_tag[i]][j][0];
+			msg.last_positions_tag[msg.active_node_index_tag[i]][j][0] = Math.cos(rotation_angle)*msg.last_positions_tag[msg.active_node_index_tag[i]][j][0] - Math.sin(rotation_angle)*msg.last_positions_tag[msg.active_node_index_tag[i]][j][1]
+			msg.last_positions_tag[msg.active_node_index_tag[i]][j][1] = Math.sin(rotation_angle)*aux_x + Math.cos(rotation_angle)*msg.last_positions_tag[msg.active_node_index_tag[i]][j][1]
+			csv_path_tag = csv_path_tag + "\n" + (ref_x*msg.last_positions_tag[msg.active_node_index_tag[i]][j][0]/map_scale_factor).toString() + "," + (ref_y*msg.last_positions_tag[msg.active_node_index_tag[i]][j][1]/map_scale_factor).toString();
 		}
+
+		var d3_positions_tag_path = d3.csvParse(csv_path_tag, d=>
+			{d.x=+d.x;
+			d.y=+d.y;
+			return d;});
+
+			svg.append("path")
+				   .datum(d3_positions_tag_path)
+				   .attr("fill", "none")
+				   .attr("stroke", "#F9152F")
+				   .attr("stroke-width", 1)
+
+				   .attr("class","tag")
+				   .attr("d", d3.line()
+						.x(function(d) { return x(d.x) })
+						.y(function(d) { return y(d.y) })
+						.curve(d3.curveBasis)
+			)
 
 		if(msg.dimensions == 2)
 		{
-			updateTable('height', i+1, [msg.active_node_index_tag[i], "Tag", msg.tag_position[msg.active_node_index_tag[i]][0].toFixed(2), (msg.tag_position[msg.active_node_index_tag[i]][1]).toFixed(2), "-", msg.anchors_in_tag_range[i], (msg.pps_tag).toFixed(0), (10*msg.tag_velocity/busPeriod).toFixed(1), msg.tag_filter_order]);
+			updateTable('height', i+1, [msg.active_node_index_tag[i], "Tag", msg.tag_position[msg.active_node_index_tag[i]][0].toFixed(2), (msg.tag_position[msg.active_node_index_tag[i]][1]).toFixed(2), "-", msg.anchors_in_tag_range[i], (msg.pps_tag).toFixed(0), (10*msg.tag_velocity[i]/busPeriod).toFixed(1), msg.average_tag, msg.tag_filter_order]);
 		}
 		if(msg.dimensions == 3)
 		{
-			updateTable('height', i+1, [msg.active_node_index_tag[i], "Tag", msg.tag_position[msg.active_node_index_tag[i]][0].toFixed(2), (msg.tag_position[msg.active_node_index_tag[i]][1]).toFixed(2), (msg.tag_position[msg.active_node_index_tag[i]][2]/map_scale_factor).toFixed(2), msg.anchors_in_tag_range[i], (msg.pps_tag).toFixed(0), (10*msg.tag_velocity/busPeriod).toFixed(1), msg.tag_filter_order]);
+			updateTable('height', i+1, [msg.active_node_index_tag[i], "Tag", msg.tag_position[cc][0].toFixed(2), (msg.tag_position[msg.active_node_index_tag[i]][1]).toFixed(2), (msg.tag_position[msg.active_node_index_tag[i]][2]/map_scale_factor).toFixed(2), msg.anchors_in_tag_range[i], (msg.pps_tag).toFixed(0), (10*msg.tag_velocity[i]/busPeriod).toFixed(1), msg.average_tag,  msg.tag_filter_order]);
 		}
 
-		if(msg.tag_started == 0)
+		if(msg.tag_started == 0 || msg.inactive_tags[msg.active_node_index_tag[i]] == 1)
 		{
 			document.getElementById('height').rows[i+1].style.backgroundColor = "#D3D3D3";
 		}
@@ -160,11 +182,11 @@ function update_map(msg)
 		 + "," + msg.active_node_index[i].toString();
 		if(msg.dimensions == 2)
 		{
-			updateTable('height', i+1+msg.active_node_count_tag, [msg.active_node_index[i], "Anchor", msg.positions[i][0].toFixed(2), msg.positions[i][1].toFixed(2),"-", msg.anchors_in_range[msg.active_node_index[i]], (msg.pps).toFixed(0),"-","-"]);
+			updateTable('height', i+1+msg.active_node_count_tag, [msg.active_node_index[i], "Anchor", msg.positions[i][0].toFixed(2), msg.positions[i][1].toFixed(2),"-", msg.anchors_in_range[msg.active_node_index[i]], (msg.pps).toFixed(0),"-", "-", "-"]);
 		}
 		if(msg.dimensions == 3)
 		{
-			updateTable('height', i+1+msg.active_node_count_tag, [msg.active_node_index[i], "Anchor", msg.positions[i][0].toFixed(2), msg.positions[i][1].toFixed(2), (msg.positions[i][2]/map_scale_factor).toFixed(2), msg.anchors_in_range[msg.active_node_index[i]], (msg.pps).toFixed(0),"-","-"]);
+			updateTable('height', i+1+msg.active_node_count_tag, [msg.active_node_index[i], "Anchor", msg.positions[i][0].toFixed(2), msg.positions[i][1].toFixed(2), (msg.positions[i][2]/map_scale_factor).toFixed(2), msg.anchors_in_range[msg.active_node_index[i]], (msg.pps).toFixed(0),"-", "-", "-"]);
 		}
 
 		if(msg.infra_started == 0)
@@ -247,25 +269,6 @@ function update_map(msg)
 		d.id=d.id;
 		return d;});
 
-    var d3_positions_tag_path = d3.csvParse(csv_path_tag, d=>
-		{d.x=+d.x;
-		d.y=+d.y;
-		return d;});
-
-		svg.selectAll("path.tag").remove()
-
-		svg.append("path")
-			   .datum(d3_positions_tag_path)
-			   .attr("fill", "none")
-			   .attr("stroke", "#F9152F")
-			   .attr("stroke-width", 1)
-
-			   .attr("class","tag")
-		       .attr("d", d3.line()
-					.x(function(d) { return x(d.x) })
-					.y(function(d) { return y(d.y) })
-					.curve(d3.curveBasis)
-				)
 
 	  svg.selectAll("circle").remove()
 	  svg.selectAll("#circle_label").remove()

@@ -155,6 +155,9 @@ The UI has three tabs:
 Results are better if all the anchors are in range of each other. The anchors should not be moved after the current execution of the demo has been started. If their positions change, stop and start
 the demo again to recalculate their positions.
 
+In 3D positioning mode, the first three anchors (e.g. anchors 1, 2 and 3) define the surface with z=0, so they should be placed at the same height. For accurate results, the remaining anchors (e.g. anchors 4, 5, etc.) should be placed at variable heights to have as much z variability as possible in their coordinates.
+
+Instead of running the self-calibration procedure, it is possible to manually fix the anchor coordinates by setting `precomputed_positions = 1` in `rnl_ranging_config.py`.
 
 ## Troubleshooting
 

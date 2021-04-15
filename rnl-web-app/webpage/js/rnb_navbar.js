@@ -25,7 +25,16 @@ function connect_socket_navbar() {
 	});
 
 	socket.on('host_disconnected', function(rec_msg){
-		connection_lost();
+		$("#btn_start_tag").show().css('color', 'grey').css('pointer-events', 'none');
+		$("#btn_start_tag2w").show().css('color', 'grey').css('pointer-events', 'none');
+		$("#btn_start_infra").show().css('color', 'grey').css('pointer-events', 'none');
+		$("#btn_stop_tag").hide();
+		$("#btn_stop_tag2w").hide();
+		$("#btn_stop_infra").hide();
+		$("#dimensions").css('pointer-events', 'auto');
+		$("#dimensions").css("color", "green"); 
+		connection_lost = 1;
+		enable_tag_mode = 0
 	});
 
 	socket.on('connect', function(){
@@ -35,23 +44,33 @@ function connect_socket_navbar() {
 		};
 		socket.emit('client_type',msg);
 	});
-
-	socket.on('disconnect', function(){
-		connection_lost();
-	});
-}
-
-function connection_lost() {
-	// rnb_connected = 0;
-	// rnb_started = 0;
-	$("#btn_start_tag").show().css('color', 'grey').css('pointer-events', 'none');
-	$("#btn_start_infra").show().css('color', 'grey').css('pointer-events', 'none');
-	$("#btn_stop_tag").hide();
-	$("#btn_stop_infra").hide();
 }
 
 function connection_recovered() {
-	// rnb_connected = 1;   
+	// rnb_connected = 1;
+	connection_lost = 0;
+	$("#average_minus").show()
+	$("#average_plus").show()
+	$("#average_d_minus").show()
+	$("#average_d_plus").show()	
+	if(enable_tag_mode && dimensions_updated == 0)
+	{
+		$("#btn_start_tag").show().css('color', 'green').css('pointer-events', 'auto');
+		$("#btn_start_tag2w").show().css('color', 'green').css('pointer-events', 'auto');
+		
+	}
+	else
+	{
+		$("#btn_start_tag").show().css('color', 'grey').css('pointer-events', 'none');
+		$("#btn_start_tag2w").show().css('color', 'grey').css('pointer-events', 'auto');
+	}
+	$("#btn_start_infra").show().css('color', 'green').css('pointer-events', 'auto');
+	$("#btn_stop_tag").hide();
+	$("#btn_stop_tag2w").hide();
+	$("#btn_stop_infra").hide();
+	
+	$("#dimensions").css('pointer-events', 'auto');
+	$("#dimensions").css("color", "green"); 
 }
 
 function connection_restarted() {
@@ -119,59 +138,118 @@ $(document).ready(function() {
 	});
 });
 
+let stats_received;
+let connection_lost = 1;
+
+var intervalId = setInterval(function() {
+	if(!connection_lost)
+	{
+		if(!stats_received)
+		{
+			connection_recovered();
+		}
+		else
+		{
+			stats_received = 0;
+		}
+	}
+}, 2000);
+
 let enable_tag_mode = 0;
 function connect_navbar() {
 	  socket.on('net_stats', function(rec_msg) {
 				if(rec_msg.type == "stats")
 				{
-					if(rec_msg.role == 2)
+					stats_received = 1;
+					connection_lost = 0;
+					if(rec_msg.role == REDNODEBUS_ROLE_MASTER)
 					{
 						if(rec_msg.rnr_st)
 						{
 							if(rec_msg.rnr_infra)
 							{
 								$("#btn_start_tag").show().css('color', 'grey').css('pointer-events', 'none');
+								$("#btn_start_tag2w").show().css('color', 'grey').css('pointer-events', 'none');
 								$("#btn_start_infra").hide();
 								$("#btn_stop_tag").hide();
+								$("#btn_stop_tag2w").hide();
 								$("#btn_stop_infra").show();
 								$("#average_minus").show()
 								$("#average_plus").show()
+								$("#average_d_minus").show()
+								$("#average_d_plus").show()
 							}
 							else
 							{
-								$("#btn_start_tag").hide()
 								$("#btn_start_infra").show().css('color', 'grey').css('pointer-events', 'none');
-								$("#btn_stop_tag").show();
 								$("#btn_stop_infra").hide();
 								$("#average_minus").hide()
 								$("#average_plus").hide()
+								$("#average_d_minus").hide()
+								$("#average_d_plus").hide()
+								
+								if(rec_msg.rnr_mode == 1)
+								{
+									$("#btn_start_tag").hide()
+									$("#btn_stop_tag").show();
+									
+									$("#btn_start_tag2w").show().css('color', 'grey').css('pointer-events', 'none');
+									$("#btn_stop_tag2w").hide();
+									
+								}
+								if(rec_msg.rnr_mode == 2)
+								{
+									$("#btn_start_tag2w").hide()
+									$("#btn_stop_tag2w").show();
+									
+									$("#btn_start_tag").show().css('color', 'grey').css('pointer-events', 'none');
+									$("#btn_stop_tag").hide();
+								}
 							}
+							
+							$("#dimensions").css("pointer-events", "none");
+							$("#dimensions").css("color", "red");
 						}
 						else
 						{
 							$("#average_minus").show()
-							$("#average_plus").show()	
-							if(enable_tag_mode)
+							$("#average_plus").show()
+							$("#average_d_minus").show()
+							$("#average_d_plus").show()								
+							if(enable_tag_mode && dimensions_updated == 0)
 							{
 								$("#btn_start_tag").show().css('color', 'green').css('pointer-events', 'auto');
+								$("#btn_start_tag2w").show().css('color', 'green').css('pointer-events', 'auto');
 							}
 							else
 							{
 								$("#btn_start_tag").show().css('color', 'grey').css('pointer-events', 'none');
+								$("#btn_start_tag2w").show().css('color', 'grey').css('pointer-events', 'none');
 							}
 							$("#btn_start_infra").show().css('color', 'green').css('pointer-events', 'auto');
 							$("#btn_stop_tag").hide();
+							$("#btn_stop_tag2w").hide();
 							$("#btn_stop_infra").hide();
+							
+							$("#dimensions").css("color", "green");
+							$("#dimensions").css('pointer-events', 'auto');
 						}
 					}
-					else if(rec_msg.role == 3)
+					else if(rec_msg.role == REDNODEBUS_ROLE_SNIFFER)
 					{
 						$("#btn_start_tag").show().css('color', 'grey').css('pointer-events', 'none');
+						$("#btn_start_tag2w").show().css('color', 'grey').css('pointer-events', 'none');
 						$("#btn_start_infra").show().css('color', 'grey').css('pointer-events', 'none');
 						$("#btn_stop_tag").hide();
+						$("#btn_stop_tag_2w").hide();
 						$("#btn_stop_infra").hide();
 						$("#average_minus").hide()
-						$("#average_plus").hide()						
+						$("#average_plus").hide()
+						$("#average_d_minus").hide()
+						$("#average_d_plus").hide()							
+
+						$("#dimensions").css("pointer-events", "none");
+				        $("#dimensions").css("color", "red");
 					}
 				}
 				if(rec_msg.type == "coordinates")
@@ -191,13 +269,25 @@ function connect_navbar() {
 const command_types = {
 	WHO_AM_I: 'who_am_i',
     START_TAG: 'start_tag',
+	START_TAG_2W: 'start_tag2w',
     START_INFRA: 'start_infra',
 	STOP: 'stop',
-	TAG_AVG: 'tag_avg'
+	TAG_AVG: 'tag_avg',
+	TAG_AVG_D: 'tag_avg_d',
+	NUM_DIM: 'num_dim'
 }
 
 $(document).ready(function() {
 	$("#btn_stop_tag").click(function() {
+			var msg = {
+				type: command_types.STOP
+			};
+			socket.emit('commands', msg);
+			//rnb_started = 0;
+			return false;
+	});
+	
+	$("#btn_stop_tag2w").click(function() {
 			var msg = {
 				type: command_types.STOP
 			};
@@ -223,6 +313,14 @@ $(document).ready(function() {
 			};
 			
 			socket.emit('commands', msg);
+			
+			var msg = {
+				type: command_types.TAG_AVG_D,
+				avg: filter_strength_d
+			};
+			
+			
+			socket.emit('commands', msg);
 
 			var msg = {
 				type: command_types.START_TAG
@@ -234,7 +332,44 @@ $(document).ready(function() {
 			return false;
 	});
 	
+		$("#btn_start_tag2w").click(function() {
+			
+			var msg = {
+				type: command_types.TAG_AVG,
+				avg: filter_strength
+			};
+			
+			socket.emit('commands', msg);
+			
+			var msg = {
+				type: command_types.TAG_AVG_D,
+				avg: filter_strength_d
+			};
+			
+			
+			socket.emit('commands', msg);
+
+			var msg = {
+				type: command_types.START_TAG_2W
+			};
+
+			socket.emit('commands', msg);
+			
+			//rnb_started = 0;
+			return false;
+	});
+	
 	$("#btn_start_infra").click(function() {
+		
+			var msg = {
+				type: command_types.NUM_DIM,
+				dim: dimensions_mode
+			};
+			
+			socket.emit('commands', msg);
+			
+			dimensions_updated = 0;
+		
 			var msg = {
 				type: command_types.START_INFRA
 			};
@@ -246,6 +381,34 @@ $(document).ready(function() {
 
 let filter_strength = 32;
 
+let filter_strength_d = 4;
+
+$(document).ready(function() {
+	$("#average_d_minus").click(function() {
+		if(filter_strength_d > 2)
+		{
+			filter_strength_d = filter_strength_d - 2;
+		}
+        
+		$('#average_d').html( filter_strength_d  +' Distance Filter Order' );
+
+		return false;
+	});
+});
+
+$(document).ready(function() {
+	$("#average_d_plus").click(function() {
+		if(filter_strength_d < 8)
+		{
+			filter_strength_d = filter_strength_d + 2;
+		}
+
+        $('#average_d').html( filter_strength_d  + ' Distance Filter Order' );
+		
+		return false;
+    });
+});
+
 $(document).ready(function() {
 	$("#average_plus").click(function() {
 		if(filter_strength < 96)
@@ -253,9 +416,29 @@ $(document).ready(function() {
 			filter_strength = filter_strength + 8;
 		}
 
-        $('#average').html( filter_strength  + ' Filter Strength' );
+        $('#average').html( filter_strength  + ' Position Filter Order' );
 		
 		return false;
+    });
+});
+
+let dimensions_mode = 2
+let dimensions_updated = 1
+$(document).ready(function() {
+	$("#dimensions").click(function() {
+		$("#btn_start_tag").css('color', 'grey').css('pointer-events', 'one');
+		$("#btn_start_tag2w").css('color', 'grey').css('pointer-events', 'none');
+		dimensions_updated = 1
+		if(dimensions_mode == 2)
+		{
+			dimensions_mode = 3;
+			$("#dimensions").html("<b>3D</b>");
+		}
+		else
+		{
+			dimensions_mode = 2;
+			$("#dimensions").html("<b>2D</b>");
+		}
     });
 });
 
@@ -266,7 +449,7 @@ $(document).ready(function() {
 			filter_strength = filter_strength - 8;
 		}
         
-		$('#average').html( filter_strength  +' Filter Strength' );
+		$('#average').html( filter_strength  +' Position Filter Order' );
 
 		return false;
 	});

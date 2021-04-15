@@ -53,7 +53,6 @@ const client_types = {
 }
 
 var host_connected = 0;
-var host_started = 1;
 
 io.on('connection', function(socket){
     var client_type;
@@ -82,16 +81,13 @@ io.on('connection', function(socket){
             case client_types.HOST:
                 host_connected = 1;
 				console.log('host connected');
+				socket.broadcast.emit('host_connected');
                 break;
             case client_types.WEB:
 				console.log('web connected');
-                if(host_connected&&!host_started)
+                if(host_connected)
                 {
                     socket.emit('host_connected');
-                }
-                else if(host_connected&&host_started)
-                {
-                    socket.emit('host_started');
                 }
                 break;
         }
