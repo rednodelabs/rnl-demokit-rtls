@@ -68,13 +68,13 @@ For simplified logging mode, please use:
 node app.js -s
 ```
 
-You will find two different JSON message formats.
+You will find two different JSON message formats:
+
 The ranging type, containing the raw distances between nodes, e.g.:
 ```
 {"type":"ranging","distances":[[1,2,100],[3,2,70]]}
 ```
-where each element of the array refers the initiator node id in the first position,
-the responder node in the second position, and finally the measured distance between them.
+where each element of the array refers the initiator node id in the first position, the responder node in the second position, and finally the measured distance between them.
 
 The coordinates type, containing the processed coordinates, e.g.:
 ```
@@ -111,23 +111,17 @@ On Windows, run:
 venv\Scripts\activate.bat
 ```
 
-In order to run it as a Python script, just run it as:
+Then install the requirements:
 ```
 pip install -r requirements.txt
 ```
 
 ### Run
 
-Before running it, be sure that the rnl-web-app is running in another terminal the RNL USB dongle is plugged.
+Before running it, be sure that the rnl-web-app is running in another terminal and that the RNL USB dongle is plugged. Then start the application:
 
-In case you want to run it as a Python script:
 ```
 python rnl_gateway_serial_app.py
-```
-
-If you installed the application as a Python module:
-```
-rnl-gateway-serial-app
 ```
 
 
