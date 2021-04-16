@@ -116,12 +116,6 @@ In order to run it as a Python script, just run it as:
 pip install -r requirements.txt
 ```
 
-Otherwise, if you prefer to install the application as a Python module, use the following commands:
-```
-pip install wheel
-pip install "git+https://github.com/rednodelabs/rnl-demokit-rtls#egg=rnl-gateway-serial-app&subdirectory=rnl-host-app"
-```
-
 ### Run
 
 Before running it, be sure that the rnl-web-app is running in another terminal the RNL USB dongle is plugged.
@@ -135,10 +129,6 @@ If you installed the application as a Python module:
 ```
 rnl-gateway-serial-app
 ```
-
-### Logging
-
-In case you want to set up another logging configuration, indicate your file configuration with the option `--log-config`.
 
 
 # User Guide

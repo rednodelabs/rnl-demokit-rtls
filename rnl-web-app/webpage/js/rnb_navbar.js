@@ -166,6 +166,11 @@ function connect_navbar() {
 					{
 						if(rec_msg.rnr_st)
 						{
+							$("#average_minus").hide()
+							$("#average_plus").hide()
+							$("#average_d_minus").hide()
+							$("#average_d_plus").hide()
+							
 							if(rec_msg.rnr_infra)
 							{
 								$("#btn_start_tag").show().css('color', 'grey').css('pointer-events', 'none');
@@ -174,19 +179,11 @@ function connect_navbar() {
 								$("#btn_stop_tag").hide();
 								$("#btn_stop_tag2w").hide();
 								$("#btn_stop_infra").show();
-								$("#average_minus").show()
-								$("#average_plus").show()
-								$("#average_d_minus").show()
-								$("#average_d_plus").show()
 							}
 							else
 							{
 								$("#btn_start_infra").show().css('color', 'grey').css('pointer-events', 'none');
 								$("#btn_stop_infra").hide();
-								$("#average_minus").hide()
-								$("#average_plus").hide()
-								$("#average_d_minus").hide()
-								$("#average_d_plus").hide()
 								
 								if(rec_msg.rnr_mode == 1)
 								{
