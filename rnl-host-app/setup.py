@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="rnl-gateway-serial-app",
-    version="2.1.0",
+    version="2.1.1",
     author="RedNodeLabs",
     author_email="javier@rednodelabs.com",
     description="RedNodeLabs DemoKit RTLS - Gateway Serial Application",

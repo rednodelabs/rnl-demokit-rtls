@@ -9,6 +9,7 @@ anchor_ids = [2,3,4,5,6,7,8,9,10,11,12,13]
 average_len = 4095
 average_len_tag = 1
 min_distance = 10
+fixed_bias = 20
 
 REDNODERANGING_DISTANCE_ERROR = -32768
 REDNODERANGING_ROLE_ANCHOR = 1;
